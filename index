@@ -1,1 +1,164 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Our Love</title>
 
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #ffb6c1, #ff69b4);
+        overflow-x: hidden;
+        color: white;
+    }
+
+    /* MENU */
+    .menu-btn {
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        font-size: 30px;
+        cursor: pointer;
+        z-index: 1000;
+    }
+
+    .sidebar {
+        position: fixed;
+        left: -250px;
+        top: 0;
+        width: 250px;
+        height: 100%;
+        background: #ff4d88;
+        padding-top: 60px;
+        transition: 0.3s;
+        z-index: 999;
+    }
+
+    .sidebar a {
+        display: block;
+        padding: 15px;
+        color: white;
+        text-decoration: none;
+        font-size: 18px;
+    }
+
+    .sidebar a:hover {
+        background: #ff1a75;
+    }
+
+    .sidebar.active {
+        left: 0;
+    }
+
+    /* MAIN */
+    .container {
+        text-align: center;
+        margin-top: 120px;
+    }
+
+    h1 {
+        font-size: 40px;
+    }
+
+    .days {
+        font-size: 30px;
+        margin-top: 20px;
+    }
+
+    .page {
+        display: none;
+    }
+
+    .page.active {
+        display: block;
+    }
+
+    /* HEARTS */
+    .heart {
+        position: fixed;
+        color: red;
+        animation: float 6s linear infinite;
+        font-size: 20px;
+    }
+
+    @keyframes float {
+        0% {transform: translateY(100vh);}
+        100% {transform: translateY(-10vh);}
+    }
+</style>
+</head>
+
+<body>
+
+<div class="menu-btn" onclick="toggleMenu()">☰</div>
+
+<div class="sidebar" id="sidebar">
+    <a href="#" onclick="showPage('home')">💖 Ngày yêu nhau</a>
+    <a href="#" onclick="showPage('birthday')">🎂 Sinh nhật</a>
+</div>
+
+<!-- HOME -->
+<div id="home" class="page active">
+    <div class="container">
+        <h1>Lê Quang Đại ❤️ Lê Thị Như Huỳnh</h1>
+        <div class="days">
+            Số ngày yêu nhau: <span id="dayCount"></span>
+        </div>
+    </div>
+</div>
+
+<!-- BIRTHDAY -->
+<div id="birthday" class="page">
+    <div class="container">
+        <h1>🎂 Sinh nhật</h1>
+        <p>Nam: 19 - 11 - 2006</p>
+        <p>Nữ: 17 - 03 - 2006</p>
+    </div>
+</div>
+
+<script>
+    function toggleMenu() {
+        document.getElementById("sidebar").classList.toggle("active");
+    }
+
+    function showPage(page) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(page).classList.add('active');
+        toggleMenu();
+    }
+
+    // ====== TÍNH NGÀY YÊU NHAU ======
+    // giả lập: hôm nay = 1629 ngày => tạo mốc quá khứ
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - 1629);
+
+    function updateDays() {
+        const now = new Date();
+        const diff = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
+        document.getElementById("dayCount").innerText = diff;
+    }
+
+    updateDays();
+    setInterval(updateDays, 1000 * 60);
+
+    // ====== HEART EFFECT ======
+    function createHeart() {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "❤";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (10 + Math.random() * 20) + "px";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 6000);
+    }
+
+    setInterval(createHeart, 400);
+</script>
+
+</body>
+</html>
