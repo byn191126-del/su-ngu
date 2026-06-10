@@ -46,7 +46,7 @@ body {
     background: rgba(255, 0, 102, 0.9);
     backdrop-filter: blur(10px);
     padding-top: 70px;
-    transition: 0.4s cubic-bezier(0.25, 1, 0.5, 1); /* Menu đóng mở mượt mà hơn */
+    transition: 0.4s cubic-bezier(0.25, 1, 0.5, 1); 
     z-index: 1000;
 }
 
@@ -66,36 +66,37 @@ body {
     background: rgba(255,255,255,0.2);
 }
 
-/* ===== CHÚ VỊT ĐỘI MŨ HEO ===== */
+/* ===== CHÚ VỊT ĐỘI MŨ HEO (ĐÃ SỬA) ===== */
 .duck {
-    position: absolute;
+    position: fixed; /* Chuyển thành fixed để không bị phụ thuộc vào chiều rộng sidebar */
     bottom: 20px;
-    /* Đẩy vịt sang rìa phải sidebar để khi menu đóng, vịt vẫn ló 1/2 đầu ra ngoài */
-    right: -45px; 
-    width: 95px;
+    left: -60px; /* Đẩy hẳn sang trái, chỉ để lộ khoảng 60px đầu vịt khi đóng menu */
+    width: 120px; /* Tăng kích thước to hơn (cũ là 95px) */
     height: auto;
     cursor: pointer;
+    z-index: 1002; /* Đảm bảo nằm trên cả sidebar và nút menu */
     
-    /* Trạng thái khi MENU ĐÓNG (Vịt ló đầu nghiêng nhẹ) */
+    /* Trạng thái khi MENU ĐÓNG: Vịt ló nhẹ từ cạnh trái màn hình */
     transform: rotate(15deg);
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 /* Khi MENU MỞ (.active) */
+.sidebar.active ~ .duck, 
 .sidebar.active .duck {
-    right: 20px; /* Nhảy hẳn vào bên trong menu */
+    left: 20px; /* Khi mở menu, vịt sẽ đi sâu vào trong màn hình (nằm trên sidebar) */
     animation: duckPopIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, 
-              duckIdle 3s ease-in-out infinite 0.6s; /* Hết hiệu ứng bay vào sẽ chuyển sang lắc lư liên tục */
+              duckIdle 3s ease-in-out infinite 0.6s; 
 }
 
-/* Animation lúc vịt nhảy vào khi mở menu */
+/* Animation lúc vịt nhảy ra từ bên trái */
 @keyframes duckPopIn {
-    0% { transform: scale(0.6) rotate(35deg); }
-    70% { transform: scale(1.15) rotate(-10deg); }
+    0% { transform: scale(0.6) rotate(-35deg); }
+    70% { transform: scale(1.15) rotate(10deg); }
     100% { transform: scale(1) rotate(0deg); }
 }
 
-/* Animation chú vịt tự chuyển động lắc lư nhịp nhàng khi đứng im */
+/* Animation chú vịt tự chuyển động lắc lư nhịp nhàng */
 @keyframes duckIdle {
     0%, 100% { transform: translateY(0) rotate(0deg); }
     50% { transform: translateY(-8px) rotate(4deg); }
@@ -156,12 +157,10 @@ h1 { margin: 0; font-size: 32px; }
 <div class="menu-btn" onclick="toggleMenu()">☰</div>
 
 <div class="sidebar" id="sidebar">
-
     <a href="#" onclick="showPage('home')">💖 Ngày yêu nhau</a>
     <a href="#" onclick="showPage('birthday')">🎂 Sinh nhật</a>
-
+    
     <img src="duck.png" alt="Duck" class="duck" onclick="toggleMenu()">
-
 </div>
 
 <div id="home" class="page active">
