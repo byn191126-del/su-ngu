@@ -66,27 +66,36 @@ body {
     background: rgba(255,255,255,0.2);
 }
 
-/* ===== VỊT ===== */
+/* ===== VỊT LÓ ĐẦU ===== */
 .duck {
     position: absolute;
-    bottom: 40px;
-    left: 20px;
-    font-size: 45px;
-    transform: translateX(-120px);
+    bottom: 25px;
+    left: -40px;
+    width: 90px;
+
+    transform: translateX(-120px) scale(0.6);
     opacity: 0;
     transition: 0.4s ease;
 }
 
 .sidebar.active .duck {
-    transform: translateX(0);
+    transform: translateX(0) scale(1);
     opacity: 1;
-    animation: duckPop 0.7s ease;
+    animation: duckPeek 0.7s ease;
 }
 
-@keyframes duckPop {
-    0% {transform: translateX(-120px) scale(0.5);}
-    60% {transform: translateX(10px) scale(1.2);}
-    100% {transform: translateX(0) scale(1);}
+@keyframes duckPeek {
+    0% {
+        transform: translateX(-120px) scale(0.4) rotate(-10deg);
+        opacity: 0;
+    }
+    60% {
+        transform: translateX(10px) scale(1.2) rotate(8deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(0) scale(1) rotate(0deg);
+    }
 }
 
 /* ===== CARD ===== */
@@ -104,13 +113,6 @@ body {
     text-align: center;
     backdrop-filter: blur(12px);
     box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-    animation: floatCard 4s ease-in-out infinite;
-}
-
-@keyframes floatCard {
-    0% {transform: translateY(0px);}
-    50% {transform: translateY(-10px);}
-    100% {transform: translateY(0px);}
 }
 
 h1 { margin: 0; font-size: 32px; }
@@ -155,8 +157,9 @@ h1 { margin: 0; font-size: 32px; }
     <a href="#" onclick="showPage('home')">💖 Ngày yêu nhau</a>
     <a href="#" onclick="showPage('birthday')">🎂 Sinh nhật</a>
 
-    <!-- CHÚ VỊT -->
-    <div class="duck">🦆</div>
+    <!-- VỊT LÓ ĐẦU -->
+    <img class="duck" src="https://i.imgur.com/8QfQx5T.png" alt="duck">
+
 </div>
 
 <!-- HOME -->
@@ -177,8 +180,8 @@ h1 { margin: 0; font-size: 32px; }
     <div class="container">
         <div class="card">
             <h1>🎂 Sinh nhật</h1>
-            <p>Nam: 19 - 11 - 2006</p>
-            <p>Nữ: 17 - 03 - 2006</p>
+            <p>Lê Quang Đại: 19 - 11 - 2006</p>
+            <p>Lê Thị Như Huỳnh: 17 - 03 - 2006</p>
         </div>
     </div>
 </div>
