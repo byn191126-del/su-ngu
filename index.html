@@ -66,14 +66,14 @@ body {
     background: rgba(255,255,255,0.2);
 }
 
-/* ===== VỊT LÓ ĐẦU ===== */
+/* ===== VỊT SVG ===== */
 .duck {
     position: absolute;
-    bottom: 25px;
-    left: -40px;
+    bottom: 20px;
+    left: 20px;
     width: 90px;
 
-    transform: translateX(-120px) scale(0.6);
+    transform: translateX(-120px) scale(0.5);
     opacity: 0;
     transition: 0.4s ease;
 }
@@ -81,21 +81,13 @@ body {
 .sidebar.active .duck {
     transform: translateX(0) scale(1);
     opacity: 1;
-    animation: duckPeek 0.7s ease;
+    animation: duckPop 0.7s ease;
 }
 
-@keyframes duckPeek {
-    0% {
-        transform: translateX(-120px) scale(0.4) rotate(-10deg);
-        opacity: 0;
-    }
-    60% {
-        transform: translateX(10px) scale(1.2) rotate(8deg);
-        opacity: 1;
-    }
-    100% {
-        transform: translateX(0) scale(1) rotate(0deg);
-    }
+@keyframes duckPop {
+    0% { transform: translateX(-120px) scale(0.4) rotate(-10deg); }
+    60% { transform: translateX(10px) scale(1.2) rotate(8deg); }
+    100% { transform: translateX(0) scale(1) rotate(0deg); }
 }
 
 /* ===== CARD ===== */
@@ -128,7 +120,7 @@ h1 { margin: 0; font-size: 32px; }
     font-weight: bold;
 }
 
-/* ===== TIM ===== */
+/* TIM */
 .heart {
     position: fixed;
     color: #ff1a75;
@@ -137,11 +129,11 @@ h1 { margin: 0; font-size: 32px; }
 }
 
 @keyframes float {
-    0% {transform: translateY(100vh) scale(1);}
-    100% {transform: translateY(-10vh) scale(1.5);}
+    0% {transform: translateY(100vh);}
+    100% {transform: translateY(-10vh);}
 }
 
-/* ===== PAGE ===== */
+/* PAGE */
 .page { display: none; }
 .page.active { display: block; }
 
@@ -157,8 +149,15 @@ h1 { margin: 0; font-size: 32px; }
     <a href="#" onclick="showPage('home')">💖 Ngày yêu nhau</a>
     <a href="#" onclick="showPage('birthday')">🎂 Sinh nhật</a>
 
-    <!-- VỊT LÓ ĐẦU -->
-    <img class="duck" src="https://i.imgur.com/8QfQx5T.png" alt="duck">
+    <!-- 🦆 VỊT SVG (CHẮC CHẮN HIỂN THỊ) -->
+    <div class="duck">
+        <svg viewBox="0 0 64 64" width="90" height="90">
+            <path fill="#FFD54F" d="M20 40c0-8 6-14 14-14s14 6 14 14-6 14-14 14-14-6-14-14z"/>
+            <circle cx="42" cy="28" r="10" fill="#FFD54F"/>
+            <circle cx="45" cy="25" r="2" fill="#000"/>
+            <path fill="#FF8A00" d="M50 30l8 3-8 3z"/>
+        </svg>
+    </div>
 
 </div>
 
@@ -197,32 +196,30 @@ function showPage(page) {
     toggleMenu();
 }
 
-/* ===== NGÀY YÊU NHAU ===== */
+/* NGÀY YÊU NHAU */
 const startDate = new Date();
 startDate.setDate(startDate.getDate() - 1629);
 
 function updateDays() {
     const now = new Date();
-    const diff = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
+    const diff = Math.floor((now - startDate) / (1000*60*60*24));
     document.getElementById("dayCount").innerText = diff;
 }
 
 updateDays();
 setInterval(updateDays, 60000);
 
-/* ===== TIM BAY ===== */
+/* TIM BAY */
 function createHeart() {
     const heart = document.createElement("div");
     heart.className = "heart";
     heart.innerHTML = "❤";
     heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = (10 + Math.random() * 20) + "px";
     document.body.appendChild(heart);
-
-    setTimeout(() => heart.remove(), 6000);
+    setTimeout(()=>heart.remove(),6000);
 }
 
-setInterval(createHeart, 350);
+setInterval(createHeart,350);
 </script>
 
 </body>
